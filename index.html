@@ -3,19 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>碎银几两 · v12 交互体验版 2</title>
+<title>碎银几两 · v19 交互体验版</title>
 <meta name="robots" content="noindex,nofollow">
 <meta name="referrer" content="no-referrer">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'none'; worker-src 'self' blob:; object-src 'none'; frame-src 'none'; form-action 'none'; base-uri 'none'">
-<meta name="description" content="碎银几两 v12 交互体验版。测试账目仅在当前页面内存中使用，刷新后清空。">
+<meta name="description" content="碎银几两 v19 交互体验版。测试账目仅在当前页面内存中使用，刷新后清空。">
 <meta name="theme-color" content="#fef5f3">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="随银几两">
 <meta name="format-detection" content="telephone=no">
-<link rel="icon" href="./icons/icon-192.png">
-<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="icon" href="./icon-192.png">
+<link rel="apple-touch-icon" href="./apple-touch-icon.png">
 <style>
   *{box-sizing:border-box}
   html,body{margin:0;padding:0}
@@ -1093,55 +1093,157 @@
  .bank-delete-scope{font-size:11px}.bank-manager-actions{gap:6px}
 }
 
+
+/* v13：账本常驻，钱包/线上渠道从侧边浮窗打开，唯一钢笔移到桌面。 */
+.desk-deck[data-active=book]{margin-right:88px}
+.desk-deck[data-active=book] .ledger-book,.desk-deck[data-active=book] .book-cover{width:calc(100% - 18px);left:50%}
+.desk-deck>.book-cover{visibility:hidden}
+.desk-tools{position:absolute;right:-90px;top:32px;z-index:95;display:flex;flex-direction:column;align-items:center;gap:21px;width:78px}
+.desk-tool{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;width:76px;min-height:80px;border:0;background:transparent;color:#9a8071;font:11px inherit;cursor:pointer;padding:5px;touch-action:manipulation;transition:transform .2s}
+.desk-tool:hover{transform:translateY(-3px)}
+.desk-tool svg{width:68px;height:52px;overflow:visible;filter:drop-shadow(1px 5px 3px #80675425)}
+.desk-tool.phone-tool svg{width:35px;height:60px}
+.desk-tools .paper-pen{position:relative;right:auto;top:auto;width:48px;height:186px;flex:none;margin-top:4px}
+.desk-tools .paper-pen svg{height:160px;width:34px;margin:auto}
+.desk-tools .paper-pen:after{content:'记一笔';position:absolute;bottom:0;left:0;right:0;font:11px sans-serif;color:#937d9f;text-align:center}
+#wallet-float{position:fixed;inset:112px 24px auto auto;width:min(550px,calc(100vw - 28px));max-height:calc(100dvh - 140px);margin:0;padding:17px 20px 20px;box-sizing:border-box;overflow:auto;overscroll-behavior:contain;border:1px solid #dfcfc2;border-radius:20px;background:#fff9f0;box-shadow:0 20px 80px #68544440;color:#8b7465}
+#wallet-float::backdrop{background:#6d59651c}
+.wallet-float-head{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14px;color:#806759}
+.wallet-float-head button{font:12px inherit;border:1px solid #d8c8b8;border-radius:16px;padding:8px 12px;background:#fffdf6;color:#8d7766;min-height:36px}
+#wallet-float .desk-wallet{position:relative;inset:auto;transform:none;opacity:1;pointer-events:auto;transition:none}
+#wallet-float .wallet-stage{pointer-events:auto;margin-top:-14px}
+#wallet-float .wallet-caption{text-align:center;font-size:11px;margin:0 0 14px}
+#wallet-float .wallet-detail{margin:12px 0 0;padding:12px 0 0;border-top:1px solid #e9dacc}
+#wallet-float .detail-numbers b{font-size:20px}
+#wallet-float .wallet-detail p{font-size:10px}
+#wallet-float .channel-tabs{margin-top:10px}
+@media(max-width:600px){
+ .desk-intro{letter-spacing:0;font-size:10px;gap:6px}
+ .desk-deck[data-active=book]{margin-right:0;margin-top:8px;padding-top:78px;height:clamp(710px,calc(100dvh - 100px),860px);min-height:710px;overflow:visible}
+ .desk-deck[data-active=book] .ledger-book{top:84px;height:calc(100% - 94px);width:calc(100% - 8px);left:50%;padding:14px 9px 12px}
+ .desk-tools{top:0;right:3px;left:auto;flex-direction:row;gap:13px;width:auto;height:76px;padding:0 9px;border-radius:17px;background:#fffaf1b3;border:1px solid #e5d9c9;box-shadow:0 4px 12px #8d726410}
+ .desk-tool{width:57px;min-height:66px;gap:3px;padding:4px;font-size:10px}
+ .desk-tool svg{width:48px;height:37px}.desk-tool.phone-tool svg{width:23px;height:40px}
+ .desk-tools .paper-pen{width:45px;height:66px;margin:0;transform:rotate(6deg)}
+ .desk-tools .paper-pen svg{height:47px;width:22px;margin:0 auto}.desk-tools .paper-pen:after{font-size:10px;bottom:1px}
+ #wallet-float{inset:92px 14px auto;width:calc(100vw - 28px);max-height:calc(100dvh - 112px);padding:14px 10px 16px}
+ #wallet-float .wallet-stage{margin-top:-8px}
+ #wallet-float .wallet-caption{font-size:10px}
+ #wallet-float .wallet-detail{padding-left:6px;padding-right:6px}
+ .paper-actions button{min-height:36px}
+}
+@media(prefers-reduced-motion:reduce){.desk-tool{transition:none}}
+
+
+/* 纸页边缘的轻提示不拦截明细点击，按钮导航仍保留。 */
+.paper-stage{touch-action:pan-y;user-select:none;-webkit-user-select:none}
+.paper-stage:before,.paper-stage:after{position:absolute;bottom:11px;z-index:10;color:#b3a08f;font:18px Georgia,serif;opacity:.65;pointer-events:none}
+.paper-stage:before{content:'‹';left:5px}.paper-stage:after{content:'›';right:5px}
+
+
+/* v15：钱包在前，合上的年度账本与同一支钢笔放到旁边。 */
+#wallet-float[hidden],#desk-book-rest[hidden]{display:none!important}
+.desk-deck[data-active=wallet]{margin-right:88px;height:clamp(660px,calc(100dvh - 145px),820px);min-height:660px}
+#wallet-float{position:absolute;inset:18px auto auto 0;width:calc(100% - 275px);max-height:none;min-width:0;margin:0;padding:14px 0 0;border:0;border-radius:0;background:transparent;box-shadow:none;overflow:visible}
+#wallet-float .wallet-float-head{padding:0 4px;font-size:13px}
+#wallet-float .wallet-stage{margin-top:1px}
+#wallet-float .wallet-detail{padding-left:10px;padding-right:10px}
+#wallet-float .wallet-caption{margin-top:4px}
+#wallet-float .desk-wallet{position:relative;inset:auto;transform:none;opacity:1;pointer-events:auto}
+#desk-book-rest{position:absolute;z-index:25;right:-12px;top:158px;width:250px;height:360px;perspective:900px;animation:rest-book-in .45s ease both}
+#desk-book-rest .book-cover{visibility:visible;position:absolute;z-index:1;left:0;top:0;width:224px;height:316px;transform:rotate(4deg);pointer-events:auto;padding:0}
+#desk-book-rest .book-cover>*{opacity:1}
+#desk-book-rest .book-cover .book-cover-title{position:absolute;left:32px;right:17px;top:69px;margin:0;writing-mode:horizontal-tb;font-size:22px;white-space:nowrap;letter-spacing:2px}
+#desk-book-rest .book-cover .book-cover-sub{left:32px;right:17px;top:108px;font-size:10px;letter-spacing:1px}
+#desk-book-rest .book-cover .book-cover-action{left:32px;right:19px;bottom:24px;font-size:10px}
+#desk-book-rest .book-cover-action .cover-year-line{justify-content:space-between;gap:7px;margin-top:5px}
+#desk-book-rest .book-cover-action .cover-year-label{text-align:left;font-size:10px;margin-bottom:8px}
+#desk-book-rest .book-cover-action .cover-year-line b{font-size:12px}
+#desk-book-rest .paper-pen{position:absolute;z-index:2;left:auto;right:-24px;top:54px;width:46px;height:232px;transform:rotate(9deg);padding:0}
+#desk-book-rest .paper-pen svg{height:211px;width:34px;margin:0 auto}
+#desk-book-rest .paper-pen:after{content:'记一笔';position:absolute;bottom:0;left:0;right:0;font:10px sans-serif;color:#937d9f;text-align:center}
+#desk-book-rest .paper-pen:hover{transform:translateY(-5px) rotate(5deg)}
+.desk-deck[data-active=wallet] .desk-tools{gap:20px}
+@keyframes rest-book-in{from{opacity:0;transform:translateX(-34px) rotateY(-25deg) scale(1.1)}to{opacity:1;transform:none}}
+@media(max-width:760px) and (min-width:601px){
+ #wallet-float{width:calc(100% - 225px)}
+ #desk-book-rest{right:-9px;width:205px;top:180px;transform:scale(.85);transform-origin:top right}
+}
+@media(max-width:600px){
+ .desk-deck[data-active=wallet]{margin-right:0;margin-top:8px;padding-top:78px;padding-bottom:16px;height:auto;min-height:0;overflow:visible}
+ #wallet-float{position:relative;inset:auto;width:100%;margin:14px 0 0;padding:0;max-height:none}
+ #wallet-float .wallet-float-head{width:calc(100% - 143px);min-height:40px;display:flex;flex-direction:column;align-items:flex-start;gap:12px;padding:5px 0 0 6px}
+ #wallet-float .wallet-float-head button{font-size:11px}
+ #wallet-float .wallet-stage{margin-top:83px}
+ #desk-book-rest{top:94px;right:27px;width:123px;height:185px;animation-duration:.3s}
+ #desk-book-rest .book-cover{width:113px;height:171px;border-radius:5px 10px 10px 5px;transform:rotate(4deg);box-shadow:3px 4px 0 #e7dfd0,5px 7px 0 #f4ebdd,0 10px 18px #66577920}
+ #desk-book-rest .book-cover:before{left:11px;top:10px;bottom:10px}
+ #desk-book-rest .book-cover .book-cover-title{left:19px;right:7px;top:26px;font-size:14px;letter-spacing:1px}
+ #desk-book-rest .book-cover .book-cover-sub{left:19px;right:7px;top:53px;font-size:7px;letter-spacing:0;line-height:1.5}
+ #desk-book-rest .book-cover .book-cover-action{left:19px;right:9px;bottom:12px;font-size:7px}
+ #desk-book-rest .book-cover-action .cover-year-label{font-size:7px;margin-bottom:5px}
+ #desk-book-rest .book-cover-action .cover-year-line{margin-top:3px;gap:3px}
+ #desk-book-rest .book-cover-action .cover-year-line b{font-size:8px}
+ #desk-book-rest .paper-pen{right:-24px;top:20px;width:29px;height:143px;transform:rotate(8deg)}
+ #desk-book-rest .paper-pen svg{width:24px;height:125px}
+ #desk-book-rest .paper-pen:after{font-size:8px;bottom:2px}
+ .desk-deck[data-active=wallet] .desk-tools{gap:13px}
+}
+@media(prefers-reduced-motion:reduce){#desk-book-rest{animation:none}}
+@media(max-width:360px){
+ #wallet-float .wallet-stage:not(.wallet-phone-focus) .phone-group{left:calc(50% + 77px)}
+ #wallet-float .wallet-stage:not(.wallet-cash-focus) .wallet-coin{right:calc(50% + 77px)}
+}
+
+
+/* v17：手机合书摆在钱包左上，完整卡堆在下方成为主视觉。 */
+.app{overflow-x:clip;overflow-y:visible}
+#desk-book-rest{animation:none!important}
+#ledger-book{view-transition-name:desk-book}
+#desk-book-rest:not([hidden]) #book-cover{view-transition-name:desk-book}
+#paper-add{view-transition-name:desk-pen}
+#wallet-float{view-transition-name:desk-wallet}
+#phone-group{view-transition-name:desk-phone}
+#paper-drawer{view-transition-name:desk-entry}
+.desk-layout-update,.desk-layout-update .book-cover,.desk-layout-update .paper-pen,.desk-layout-update .wallet-stage *{transition:none!important}
+::view-transition{pointer-events:none}
+::view-transition-group(*){animation-duration:620ms;animation-timing-function:cubic-bezier(.22,.7,.2,1)}
+::view-transition-group(desk-pen){animation-duration:680ms}
+::view-transition-old(desk-book),::view-transition-old(desk-wallet),::view-transition-old(desk-entry){animation:desk-view-out 300ms ease both}
+::view-transition-new(desk-book),::view-transition-new(desk-wallet){animation:desk-view-in 440ms 70ms ease both}
+::view-transition-new(desk-entry){animation:desk-entry-in 430ms ease both}
+@keyframes desk-view-out{to{opacity:0}}
+@keyframes desk-view-in{from{opacity:0}to{opacity:1}}
+@keyframes desk-entry-in{from{opacity:0;transform:translateX(16px)}to{opacity:1;transform:none}}
+#wallet-float .wallet-float-head{justify-content:flex-end}
+@media(max-width:600px){
+ #wallet-float .wallet-float-head{width:100%;min-height:38px;flex-direction:row;align-items:center;justify-content:flex-end;padding:0 6px}
+ #wallet-float .wallet-stage{margin-top:0;height:340px}
+ #wallet-float #desk-book-rest{position:relative;top:auto;right:auto;left:auto;width:230px;max-width:calc(100% - 24px);height:214px;margin:4px 0 8px 8px;perspective:900px}
+ #wallet-float #desk-book-rest .book-cover{left:17px;top:16px;width:128px;height:183px;transform:rotate(3deg)}
+ #wallet-float #desk-book-rest .paper-pen{right:22px;top:2px;width:48px;height:205px;transform:rotate(7deg)}
+ #wallet-float #desk-book-rest .paper-pen svg{width:34px;height:184px}
+ #wallet-float #desk-book-rest .paper-pen:after{font-size:11px;bottom:1px}
+}
+@media(prefers-reduced-motion:reduce){
+ ::view-transition-group(*),::view-transition-old(*),::view-transition-new(*){animation-duration:1ms!important;animation-delay:0ms!important}
+}
+
+
+/* v18：小范围加强导航、键盘焦点和可读性，沿用原有纸张配色。 */
+.paper-today{border:1px solid #ded1e0;background:#faf5fa;color:#765f80;border-radius:14px;padding:5px 10px;font:inherit;white-space:nowrap}
+.paper-today:disabled{opacity:.48;cursor:default}
+.paper-recap-counts{display:flex;justify-content:center;flex-wrap:wrap;gap:6px 15px;margin-top:8px;color:#8b7b70;font-size:11px}
+.paper-recap-counts b{color:#756580;font-weight:600}
+.folder-backup-note{margin:12px 0 0;color:#806c5b;font-size:12px;line-height:1.6}
+button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #8b70a0;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.paper-today{transition:none}}
 .preview-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;margin:0 0 20px;border:1px solid #dfd8c8;border-radius:12px;background:#f3f5ee;color:#617769;font-size:12px}
 .preview-banner strong{display:block;font-size:13px;font-weight:600}.preview-banner span{display:block;margin-top:2px}.preview-actions{display:flex;gap:7px;flex-shrink:0}.preview-actions button{font:inherit;color:#617769;background:#fffdf8;border:1px solid #d3dccf;border-radius:8px;min-height:38px;padding:7px 10px;cursor:pointer}
 @media(max-width:600px){.preview-banner{align-items:flex-start;flex-direction:column;margin-bottom:12px;padding:11px 13px}.preview-actions{align-self:flex-end}}
-
-.preview-intro{position:fixed;inset:0;z-index:10000;display:grid;place-items:center;background:#fef5f3;transition:opacity .26s ease;overflow:hidden}
-.preview-intro[hidden]{display:none!important}.preview-intro.is-leaving{opacity:0;pointer-events:none}
-.intro-scene{text-align:center;transform:translateY(-18px)}.intro-art{display:block;width:min(280px,72vw);height:auto;margin:0 auto 5px}
-.intro-scene h2{font:400 24px/1.4 Georgia,'Songti SC','SimSun',serif;letter-spacing:5px;color:#786455;margin:0 0 11px;padding-left:5px;animation:intro-words .55s ease both .15s}
-.intro-scene p{font-size:12px;letter-spacing:2px;color:#ae9686;margin:0;animation:intro-words .65s ease both .3s}
-.intro-skip{position:absolute;right:max(22px,env(safe-area-inset-right));top:max(20px,env(safe-area-inset-top));border:1px solid #decebf;border-radius:30px;color:#a38e7c;background:transparent;min-width:58px;min-height:40px;font:inherit;font-size:12px;cursor:pointer}
-.intro-skip:focus-visible{outline:2px solid #859b87;outline-offset:4px}
-.intro-coin{opacity:0;animation:intro-drop .68s cubic-bezier(.42,0,.73,.53) both}.intro-coin-one{animation-delay:.1s}.intro-coin-two{animation-delay:.33s}.intro-coin-three{animation-delay:.56s}
-.intro-pouch{transform-origin:160px 250px;animation:intro-settle 1.5s ease-in-out both}.intro-neck{transform-origin:160px 125px;animation:intro-gather .5s cubic-bezier(.25,.7,.3,1) both 1.12s}
-.intro-cinch{transform-origin:160px 128px;animation:intro-gather .5s cubic-bezier(.25,.7,.3,1) both 1.12s}.intro-lip{transform-origin:160px 125px;animation:intro-gather .5s cubic-bezier(.25,.7,.3,1) both 1.12s}.intro-ties{opacity:0;animation:intro-tie .4s ease both 1.25s}
-@keyframes intro-drop{0%{opacity:0;transform:translateY(-25px)}14%{opacity:1}75%{opacity:1;transform:translateY(78px)}100%{opacity:0;transform:translateY(126px)}}
-@keyframes intro-settle{0%,35%,100%{transform:scale(1)}48%{transform:scale(1.025,.98)}65%{transform:scale(.99,1.012)}82%{transform:scale(1.012,.99)}}
-@keyframes intro-gather{to{transform:scaleX(.34)}}
-@keyframes intro-tie{from{opacity:0;transform:translateY(-2px)}to{opacity:1;transform:translateY(0)}}
-@keyframes intro-words{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-@media(prefers-reduced-motion:reduce){.preview-intro,.intro-scene *{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="preview-intro" id="preview-intro" role="dialog" aria-modal="true" aria-labelledby="intro-title" hidden>
-  <div class="intro-scene">
-    <svg class="intro-art" viewBox="0 0 320 300" fill="none" aria-hidden="true">
-      <defs>
-        <linearGradient id="intro-cloth" x1="110" y1="145" x2="215" y2="252" gradientUnits="userSpaceOnUse"><stop stop-color="#f1dfc7"/><stop offset=".55" stop-color="#e6ccb2"/><stop offset="1" stop-color="#d9b89d"/></linearGradient>
-        <linearGradient id="intro-gold" x1="-13" y1="-14" x2="15" y2="17" gradientUnits="userSpaceOnUse"><stop stop-color="#f6dfa1"/><stop offset="1" stop-color="#d7aa5e"/></linearGradient>
-      </defs>
-      <ellipse class="intro-shadow" cx="160" cy="265" rx="61" ry="7" fill="#987e67" opacity=".10"/>
-      <g class="intro-neck"><path d="M124 126L115 107Q160 96 205 107L196 126Z" fill="#ddbea2"/><ellipse cx="160" cy="108" rx="45" ry="9" fill="#b99a7f"/><ellipse cx="160" cy="107" rx="40" ry="6" fill="#a98d76"/></g>
-      <g class="intro-coin intro-coin-one"><g transform="translate(142 28) rotate(-18)"><circle r="16" fill="url(#intro-gold)" stroke="#caa361"/><circle r="12" stroke="#f9e9bb" stroke-width="1.2"/><path d="M-4-6L0 0L4-6M0 0V7M-4 1H4M-4 4H4" stroke="#a57d43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-      <g class="intro-coin intro-coin-two"><g transform="translate(177 20) rotate(18)"><circle r="14" fill="url(#intro-gold)" stroke="#caa361"/><circle r="10" stroke="#f9e9bb" stroke-width="1.2"/><path d="M-3-5L0 0L3-5M0 0V6M-3 1H3M-3 4H3" stroke="#a57d43" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-      <g class="intro-coin intro-coin-three"><g transform="translate(157 18) rotate(-8)"><circle r="16" fill="url(#intro-gold)" stroke="#caa361"/><circle r="12" stroke="#f9e9bb" stroke-width="1.2"/><path d="M-4-6L0 0L4-6M0 0V7M-4 1H4M-4 4H4" stroke="#a57d43" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></g></g>
-      <g class="intro-pouch">
-        <path d="M124 122C127 143 103 154 98 189C88 239 116 260 160 260C204 260 232 239 222 189C217 154 193 143 196 122Q160 137 124 122Z" fill="url(#intro-cloth)" stroke="#c7a88c" stroke-width="1.1"><animate attributeName="d" begin="1.12s" dur=".5s" fill="freeze" calcMode="spline" keySplines=".25 .7 .3 1" values="M124 122C127 143 103 154 98 189C88 239 116 260 160 260C204 260 232 239 222 189C217 154 193 143 196 122Q160 137 124 122Z;M148 122C143 143 103 154 98 189C88 239 116 260 160 260C204 260 232 239 222 189C217 154 177 143 172 122Q160 127 148 122Z"/></path>
-        <path d="M132 141Q116 171 120 210M146 147Q139 185 143 229M185 144Q204 177 201 218" stroke="#bc9d80" stroke-opacity=".23" stroke-width="1.5" stroke-linecap="round"/>
-        <path d="M117 231Q157 250 204 230" stroke="#fff4e6" stroke-opacity=".38" stroke-width="2" stroke-linecap="round"/>
-        <path class="intro-lip" d="M124 123Q160 138 196 123" stroke="#f6e6d3" stroke-width="4" stroke-linecap="round"/>
-        <g class="intro-stitch" opacity=".6"><path d="M150 186L160 180L170 186V199L160 205L150 199Z" stroke="#a2866c" stroke-width="1"/><path d="M156 188L160 193L164 188M160 193V199M156 194H164" stroke="#a2866c" stroke-width="1.2" stroke-linecap="round"/></g>
-      </g>
-      <g class="intro-cinch"><path d="M127 126Q160 136 193 126" stroke="#a18d75" stroke-width="2.5" stroke-linecap="round"/><path class="intro-ties" d="M145 130C132 122 128 137 145 131C139 143 131 146 126 155M148 131C164 120 165 136 149 132C154 142 165 146 169 154" stroke="#9a856c" stroke-width="2.2" stroke-linecap="round"/></g>
-    </svg>
-    <h2 id="intro-title">碎银几两</h2>
-    <p>几两随银，满腔梦想</p>
-  </div>
-  <button class="intro-skip" id="intro-skip" type="button">跳过</button>
-</div>
 <div class="app">
 
   <aside class="preview-banner" aria-label="体验版说明">
@@ -1171,7 +1273,7 @@
 
 <div class="desk-intro"><span>几两随银，满腔梦想</span><span id="wallet-clock" aria-label="设备当前时间"></span></div>
 <section aria-label="钱包">
-<div class="wallet-stage" id="wallet-stage"><div class="wallet-back"></div><div class="wallet-cards" id="wallet-cards" aria-label="银行卡，左右滑动切换"></div><div class="wallet-empty" id="wallet-empty" hidden>还没有银行卡 · 点下方添加</div><button class="wallet-coin" id="wallet-coin" type="button" aria-label="查看现金收支" aria-pressed="false"><span class="coin-mark">¥</span><span class="coin-name">现金</span></button><div class="phone-group" id="phone-group"><div class="phone-apps" id="phone-apps"><button class="phone-app" data-channel="微信零钱" type="button" style="--app-index:0"><span class="app-glyph">微</span><span>微信零钱</span></button><button class="phone-app" data-channel="支付宝" type="button" style="--app-index:1"><span class="app-glyph">支</span><span>支付宝</span></button><button class="phone-app" data-channel="花呗" type="button" style="--app-index:2"><span class="app-glyph">花</span><span>花呗</span></button></div><button class="wallet-phone" id="wallet-phone" type="button" aria-expanded="false" aria-controls="phone-apps" aria-label="选一个线上渠道"><span class="screen-icons" aria-hidden="true"><i></i><i></i><i></i></span><span class="phone-label">手机</span><span class="phone-hint">点开渠道</span></button><button class="phone-close" id="phone-close" type="button" aria-label="收起手机">×</button><div class="phone-detail" id="phone-detail" aria-live="polite"><strong id="phone-channel">选一个线上渠道</strong><span class="phone-prompt">点击上方图标，查看本月收支</span><span class="phone-values"><span>收 <b id="phone-income">¥0.00</b></span><span>支 <b id="phone-expense">¥0.00</b></span><span>净 <b id="phone-net">¥0.00</b></span></span></div></div><div class="coin-summary" id="coin-summary" aria-live="polite" aria-hidden="true"><span class="coin-summary-title">现金 · 本月收支</span><span class="coin-summary-values"><span>收入 <b id="coin-income">¥0.00</b></span><span>支出 <b id="coin-expense">¥0.00</b></span><span>净额 <b id="coin-net">¥0.00</b></span></span></div><div class="wallet-front"><div class="wallet-brand">碎银几两<small>A Few Bucks, A Lot of Dreams</small></div><button class="wallet-toggle" type="button" id="wallet-toggle" aria-expanded="false" aria-controls="wallet-cards">打开钱包</button></div></div>
+<div class="wallet-stage" id="wallet-stage"><div class="wallet-back"></div><div class="wallet-cards" id="wallet-cards" aria-label="银行卡，左右滑动切换"></div><div class="wallet-empty" id="wallet-empty" hidden>还没有银行卡 · 点下方添加</div><button class="wallet-coin" id="wallet-coin" type="button" aria-label="查看现金收支" aria-pressed="false"><span class="coin-mark">¥</span><span class="coin-name">现金</span></button><div class="phone-group" id="phone-group"><div class="phone-apps" id="phone-apps"><button class="phone-app" data-channel="微信零钱" type="button" style="--app-index:0"><span class="app-glyph">微</span><span>微信零钱</span></button><button class="phone-app" data-channel="支付宝" type="button" style="--app-index:1"><span class="app-glyph">支</span><span>支付宝</span></button><button class="phone-app" data-channel="花呗" type="button" style="--app-index:2"><span class="app-glyph">花</span><span>花呗</span></button></div><button class="wallet-phone" id="wallet-phone" type="button" aria-expanded="false" aria-controls="phone-apps" aria-label="选一个线上渠道"><span class="screen-icons" aria-hidden="true"><i></i><i></i><i></i></span><span class="phone-label">手机</span><span class="phone-hint">点开渠道</span></button><button class="phone-close" id="phone-close" type="button" aria-label="收起手机">×</button><div class="phone-detail" id="phone-detail" aria-live="polite"><strong id="phone-channel">选一个线上渠道</strong><span class="phone-prompt">点击上方图标，查看所选月份收支</span><span class="phone-values"><span>收 <b id="phone-income">¥0.00</b></span><span>支 <b id="phone-expense">¥0.00</b></span><span>净 <b id="phone-net">¥0.00</b></span></span></div></div><div class="coin-summary" id="coin-summary" aria-live="polite" aria-hidden="true"><span class="coin-summary-title">现金 · 所选月份收支</span><span class="coin-summary-values"><span>收入 <b id="coin-income">¥0.00</b></span><span>支出 <b id="coin-expense">¥0.00</b></span><span>净额 <b id="coin-net">¥0.00</b></span></span></div><div class="wallet-front"><div class="wallet-brand">碎银几两<small>A Few Bucks, A Lot of Dreams</small></div><button class="wallet-toggle" type="button" id="wallet-toggle" aria-expanded="false" aria-controls="wallet-cards">打开钱包</button></div></div>
 <p class="wallet-caption" id="wallet-caption">点一下钱包扣，把卡片展开。</p>
 <div class="channel-tabs" id="wallet-channels" aria-label="选择账户渠道"></div>
 <div class="wallet-detail" id="wallet-detail" aria-live="polite"></div>
@@ -1244,7 +1346,7 @@
       </select>
 
       <div class="select" id="cat-field">
-        <button type="button" class="select-btn" id="cat-btn" aria-haspopup="listbox" aria-expanded="false">
+        <button type="button" class="select-btn" id="cat-btn" aria-label="选择分类" aria-haspopup="listbox" aria-expanded="false">
           <span id="cat-cur"></span>
           <span class="select-text" id="cat-text">饮食</span>
           <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"
@@ -1254,7 +1356,7 @@
         <input type="hidden" id="f-cat" value="">
       </div>
 
-      <input type="number" id="f-amount" placeholder="金额" step="0.01" min="0" aria-label="金额" required>
+      <input type="number" id="f-amount" placeholder="金额" inputmode="decimal" step="0.01" min="0" aria-label="金额" required>
       <!-- 支付方式：静态基础选项兜底（文件预览这类不跑 JS 的环境也有得选）。
            v3.0.3 起不预置任何银行卡 —— 想分账哪张卡，JS 启动后点「＋ 添加银行卡…」自己加；
            fillPaySelect 会清空重建并追加历史/账单里认出的卡 -->
@@ -1286,7 +1388,7 @@
         <span class="quick-opts" id="note-quick-opts"></span>
       </div>
 
-      <button class="btn-primary" type="submit">添加</button>
+      <button class="btn-primary" type="submit">保存账目</button>
     </form>
   </section>
 
@@ -1543,8 +1645,6 @@ SOFTWARE.
     };
   })();
 
-  var PREVIEW_BANKS = ['体验银行卡(0000)', '体验银行卡(8888)'];
-
   /* ========== 配置区：想改分类，改这里就行 ========== */
   var STORE_KEY = 'workbench.wallet-preview.v1.ledger.v1';
   var BACKUP_KEY = 'workbench.wallet-preview.v1.ledger.lastbackup';
@@ -1564,7 +1664,7 @@ SOFTWARE.
   var PLACEHOLDER_BANKS = ['工商银行', '农业银行', '中国银行', '建设银行', '招商银行'];
 
   // 改版本号 = 手机上更容易察觉「这是新版」。每次改完代码顺手 +1。
-  var APP_VERSION = 'v12 · GitHub 交互体验版 2';
+  var APP_VERSION = 'v19 · GitHub 交互体验版';
   var BACKUP_WARN_DAYS = 7;
 
   // sw 的注册地址带版本号：CDN 按网址缓存，不带参数会永远拿到旧 sw。
@@ -2653,23 +2753,34 @@ SOFTWARE.
 
   /* ---------- 存取 ---------- */
   // 读的是「当前账号」的分片（没登录就是那串老 key）
+  var ledgerStorageReadable = true;
   function load() {
     try {
       var raw = previewStorage.getItem(storeKey());
       var data = raw ? JSON.parse(raw) : [];
-      records = Array.isArray(data) ? data : (data && Array.isArray(data.records) ? data.records : []);
+      if (!Array.isArray(data) && !(data && Array.isArray(data.records))) throw Error('invalid ledger');
+      records = Array.isArray(data) ? data : data.records;
+      ledgerStorageReadable = true;
+      return true;
     } catch (e) {
-      records = [];
+      ledgerStorageReadable = false;
+      var warning = document.createElement('div');
+      warning.setAttribute('role','alert');
+      warning.style.cssText='position:fixed;inset:0;z-index:99999;background:#fbf5f2;color:#5d4b45;display:grid;place-content:center;padding:28px;text-align:center;line-height:1.8';
+      warning.textContent='账本暂时无法读取，已停止修改和同步。请不要清除浏览器数据，先检查浏览器存储权限，并保留已有备份。';
+      document.body.appendChild(warning);
+      return false;
     }
   }
 
   function save() {
+    if (!ledgerStorageReadable) return false;
     try {
       previewStorage.setItem(storeKey(), JSON.stringify(records));
       scheduleSync();   // 防抖推上云；没登录或 CDN 不在时这里什么都不做
       return true;
     } catch (e) {
-      alert('保存失败：浏览器存储被禁用或已满。\n请先点右上角「导出备份」保住已有数据。');
+      alert('保存失败：浏览器存储被禁用或已满。\n请在「账单文件夹」中导出备份，保留已有数据。');
       return false;
     }
   }
@@ -3127,7 +3238,7 @@ SOFTWARE.
     sel.innerHTML = '';
     var blank = document.createElement('option');
     blank.value = '';
-    blank.textContent = '未标注';
+    blank.textContent = '未标注渠道';
     sel.appendChild(blank);
     payOptions.forEach(function (p) {
       var o = document.createElement('option');
@@ -3915,6 +4026,7 @@ SOFTWARE.
 
   /* ---------- 账单导入：面板与预览 ---------- */
   var billRows = [];      // 解析出来的候选项（带 picked 状态）
+  var billDemoMode = false;
 
   function toggleBill(open) {
     var p = $('#bill-panel');
@@ -3943,6 +4055,7 @@ SOFTWARE.
   }
 
   function resetBill() {
+    billDemoMode = false;
     billRows = [];
     $('#bill-ready').hidden = true;
     $('#bill-drop').hidden = false;
@@ -4125,6 +4238,7 @@ SOFTWARE.
     var total = billRows.length;
     var dup = billRows.filter(function (r) { return r.dup; }).length;
     var picked = billRows.filter(function (r) { return r.picked; }).length;
+    $('#btn-bill-save').disabled = picked === 0 || billDemoMode;
 
     var sum = 0;
     billRows.forEach(function (r) {
@@ -4208,7 +4322,7 @@ SOFTWARE.
 
   // zip：解压后找里面的 CSV（微信「用于个人对账」导出的就是 zip 包）
   function readZipBill(file, done) {
-    lib('./libs/jszip.min.js').then(function () {
+    lib('./jszip.min.js').then(function () {
       var fr = new FileReader();
       fr.onload = function () {
         JSZip.loadAsync(fr.result).then(function (zip) {
@@ -4228,7 +4342,7 @@ SOFTWARE.
 
   // Excel：SheetJS 读第一个工作表
   function readSheetBill(file, done) {
-    lib('./libs/xlsx.full.min.js').then(function () {
+    lib('./xlsx.full.min.js').then(function () {
       var fr = new FileReader();
       fr.onload = function () {
         try {
@@ -4245,8 +4359,8 @@ SOFTWARE.
 
   // PDF：pdf.js 逐页抽文字，重排成行
   function readPdfBill(file, done) {
-    lib('./libs/pdf.min.js').then(function () {
-      pdfjsLib.GlobalWorkerOptions.workerSrc = './libs/pdf.worker.min.js';
+    lib('./pdf.min.js').then(function () {
+      pdfjsLib.GlobalWorkerOptions.workerSrc = './pdf.worker.min.js';
       var fr = new FileReader();
       fr.onload = function () {
         pdfjsLib.getDocument({ data: fr.result }).promise.then(function (pdf) {
@@ -4383,6 +4497,7 @@ SOFTWARE.
 
   // 真正入库。走 addRecord 之外的批量路径：一次存盘，避免几百笔触发几百次写入
   function commitBill() {
+    if (billDemoMode) return;
     var picked = billRows.filter(function (r) { return r.picked; });
     if (!picked.length) { alert('一笔都没勾，那就先不导了。'); return; }
 
@@ -4478,6 +4593,7 @@ SOFTWARE.
   function showBillDemo() {
     var res = parseBillText(BILL_DEMO);
     if (res.error) { billSay('err', res.error); return; }
+    billDemoMode = true;
 
     var seen = existingBillKeys();
     billRows = res.rows.map(function (r) {
@@ -4496,8 +4612,8 @@ SOFTWARE.
     $('#bill-drop').hidden = true;
     $('#bill-ready').hidden = false;
     renderBill();
-    billSay('warn', '这是<b>示例</b>，不是你的真实账单 —— 用来让你看看导进来是什么样。' +
-                    '真正的文件请点「换一个文件」再选。');
+    billSay('warn', '这是<b>示例</b>，仅供预览，不会导入账本。' +
+                    '要导入真实账单，请点「换一个文件」。');
   }
 
   /* ---------- 识别规则面板 ---------- */
@@ -4556,10 +4672,27 @@ SOFTWARE.
   }
 
   function removeRecord(id) {
-    addTomb(id);   // 先记账墓碑：同步时靠它在云端也删掉同一条（别的设备才会跟着消失）
-    records = records.filter(function (r) { return r.id !== id; });
-    save();
-    render();
+    var next=records.filter(function(r){return r.id!==id;});
+    var keys=[storeKey(),payKey(),TOMB_KEY],entries,tx,journalWritten=false;
+    try{
+      entries=keys.map(function(key){return {key:key,before:previewStorage.getItem(key)};});
+      var stored=entries[0].before?JSON.parse(entries[0].before):[];
+      if(!Array.isArray(stored))stored=stored&&Array.isArray(stored.records)?stored.records:[];
+      if(JSON.stringify(stored)!==JSON.stringify(records))throw Error('changed');
+      var tombs=loadTombs();if(tombs.indexOf(id)<0)tombs.push(id);
+      var values=[JSON.stringify(next),entries[1].before===null?JSON.stringify(payOptions):entries[1].before,JSON.stringify(tombs)];
+      tx={version:1,phase:'prepared',entries:entries.map(function(e,i){return {key:e.key,before:e.before,after:values[i]};})};
+      previewStorage.setItem(bankDeleteJournalKey(),JSON.stringify(tx));journalWritten=true;
+      tx.entries.forEach(function(e){previewStorage.setItem(e.key,e.after);});
+      tx.phase='committed';previewStorage.setItem(bankDeleteJournalKey(),JSON.stringify(tx));
+    }catch(e){
+      var restored=true;
+      if(journalWritten){try{tx.entries.forEach(function(entry){bankStorageSet(entry.key,entry.before);});previewStorage.removeItem(bankDeleteJournalKey());}catch(rollbackError){restored=false;}}
+      alert(e.message==='changed'?'账本已在其他页面变化，请刷新后重新操作。':restored?'删除未保存，原记录已保留。':'存储恢复未完成，请刷新页面后再操作。');
+      return false;
+    }
+    try{previewStorage.removeItem(bankDeleteJournalKey());}catch(e){}
+    records=next;render();scheduleSync();return true;
   }
 
   function handleDelete(id) {
@@ -4693,8 +4826,7 @@ SOFTWARE.
     var rec = records.filter(function (r) { return r.id === editingId; })[0];
     if (!rec) { closeEditor(); return; }
     if (!confirm('确认删除这条记录？\n\n' + deleteTip(rec))) return;
-    removeRecord(editingId);
-    closeEditor();
+    if (removeRecord(editingId)) closeEditor();
   }
 
   /* ---------- 备份 ---------- */
@@ -4744,13 +4876,15 @@ SOFTWARE.
           pay: String(r.pay || '').trim(),
           from: String(r.from || '').trim(),
           to: String(r.to || '').trim(),
-          createdAt: Number(r.createdAt) || Date.now()
+          createdAt: Number(r.createdAt) || Date.now(),
+          updatedAt: Number(r.updatedAt) || undefined
         });
         added++;
       });
 
+      var previousRecords = records;
       records = Array.from(map.values());
-      if (!save()) return;
+      if (!save()) { records = previousRecords; return; }
       refreshPaySelects();   // 备份里可能带着这台设备没见过的卡
       render();
       alert('导入完成，新增 ' + added + ' 条。');
@@ -5057,7 +5191,7 @@ SOFTWARE.
         var bottom=document.createElement('span');bottom.className='card-bottom';var last=payLast4(name);
         bottom.textContent=last?'•••• '+last:'未填尾号';b.appendChild(bottom);
         var stats=document.createElement('span');stats.className='card-stats';
-        var income=document.createElement('span');income.textContent='本月收 '+money(g.inc);stats.appendChild(income);
+        var income=document.createElement('span');income.textContent=Number(currentMonth.slice(5))+'月收 '+money(g.inc);stats.appendChild(income);
         var expense=document.createElement('span');expense.textContent='支 '+money(g.exp);stats.appendChild(expense);b.appendChild(stats);
         b.addEventListener('click',function(){
           if(suppressBankClick)return;
@@ -5078,7 +5212,7 @@ SOFTWARE.
       b.style.setProperty('--card-tilt',(depth*4)+'deg');
       b.style.setProperty('--card-opacity',String(1-abs*.13));
       b.style.setProperty('--card-delay',(abs*35)+'ms');
-      b.setAttribute('aria-pressed',String(i===activeIndex));
+      b.setAttribute('aria-pressed',String(walletSelected===b.dataset.channel));
       b.tabIndex=walletExpanded&&visible?0:-1;
     });
     $('#wallet-empty').hidden=walletBanks.length>0;
@@ -5086,6 +5220,7 @@ SOFTWARE.
     var cashFocused=walletExpanded&&walletSelected==='现金';
     $('#wallet-stage').classList.toggle('wallet-cash-focus',cashFocused);
     $('#coin-summary').setAttribute('aria-hidden',String(!cashFocused));
+    $('.coin-summary-title').textContent='现金 · '+currentMonth+' 收支';
     var cash=groups.filter(function(g){return g.pay==='现金';})[0]||{inc:0,exp:0};
     $('#coin-income').textContent=money(cash.inc);
     $('#coin-expense').textContent=money(cash.exp);
@@ -5125,7 +5260,7 @@ SOFTWARE.
       var span=document.createElement('span');span.textContent=label;
       var b=document.createElement('b');b.textContent=money([inc,exp,inc-exp][i]);span.appendChild(b);numbers.appendChild(span);
     });detail.appendChild(numbers);
-    var note=document.createElement('p');note.textContent='按当月记录计算，含渠道间互转；不代表银行卡实际余额。';detail.appendChild(note);
+    var note=document.createElement('p');note.textContent='按所选月份记录计算，含渠道间互转；不代表银行卡实际余额。';detail.appendChild(note);
   }
   function updateWalletClock(){
     var d=new Date();
@@ -5136,7 +5271,9 @@ SOFTWARE.
     var app=document.querySelector('.app'),header=document.querySelector('header.top');
     var folder=document.createElement('details');folder.className='desk-folder';
     folder.innerHTML='<summary>账单文件夹<small>导入 · 备份 · 设置</small></summary>';
-    folder.appendChild(header.querySelector('.tools'));app.insertBefore(folder,app.querySelector('.backup-bar'));
+    folder.appendChild(header.querySelector('.tools'));
+    var backupNote=document.createElement('p');backupNote.className='folder-backup-note';backupNote.textContent='备份包含账目记录；未使用的银行卡和识别规则等设置不包含在内。';folder.appendChild(backupNote);
+    app.insertBefore(folder,app.querySelector('.backup-bar'));
     var panels=Array.from(app.children).filter(function(el){return el.classList.contains('panel');}).slice(0,3);
     var walletSection=$('#wallet-stage').closest('section');walletSection.classList.add('desk-wallet');
     var deck=document.createElement('div');deck.id='desk-deck';deck.className='desk-deck';deck.dataset.active='wallet';deck.tabIndex=0;deck.setAttribute('role','group');deck.setAttribute('aria-label','钱包与账本，左右滑动切换');
@@ -5147,33 +5284,8 @@ SOFTWARE.
     var book=document.createElement('section');book.id='ledger-book';book.className='ledger-book';book.setAttribute('aria-label','我的账本');book.hidden=true;
     book.innerHTML='<div class="book-title">我的账本<small><button class="book-back" type="button">返回钱包</button></small></div>';
     deck.appendChild(book);panels.forEach(function(p){book.appendChild(p);});
-    var tabs=$('#wallet-channels'),detail=$('#wallet-detail');
-    app.insertBefore(tabs,deck.nextSibling);app.insertBefore(detail,tabs.nextSibling);
-    function activateDesk(view,scroll){
-      deck.dataset.active=view;book.hidden=view!=='book';bookCover.setAttribute('aria-expanded',String(view==='book'));
-      if(view==='wallet'&&!walletExpanded){walletExpanded=true;$('#wallet-stage').classList.add('wallet-open');$('#wallet-toggle').setAttribute('aria-expanded','true');$('#wallet-toggle').textContent='收起钱包';$('#wallet-caption').textContent='看看钱都花哪儿了？';renderWallet();}
-      if(scroll){setTimeout(function(){deck.scrollIntoView({behavior:'smooth',block:'nearest'});},180);}
-    }
-    var suppressDeckClick=false,deckPointer=null;
-    bookCover.addEventListener('click',function(){if(suppressDeckClick)return;activateDesk('book',true);});
-    book.querySelector('.book-back').addEventListener('click',function(){activateDesk('wallet',true);});
-    walletSection.addEventListener('click',function(e){if(deck.dataset.active==='book'){e.stopPropagation();activateDesk('wallet',true);}});
-    deck.addEventListener('pointerdown',function(e){
-      if(e.target.closest('.ledger-book'))return;
-      if(e.target.closest('.wallet-card,.wallet-coin,.wallet-phone,.phone-app,.phone-close,.wallet-toggle'))return;
-      deckPointer={x:e.clientX,y:e.clientY};
-    });
-    deck.addEventListener('pointerup',function(e){
-      if(!deckPointer)return;var dx=e.clientX-deckPointer.x,dy=e.clientY-deckPointer.y;deckPointer=null;
-      if(Math.abs(dx)<55||Math.abs(dx)<Math.abs(dy)*1.25)return;
-      suppressDeckClick=true;activateDesk(dx<0?'book':'wallet',true);
-      setTimeout(function(){suppressDeckClick=false;},250);
-    });
-    deck.addEventListener('pointercancel',function(){deckPointer=null;});
-    deck.addEventListener('keydown',function(e){
-      if(e.target!==deck&&e.target!==bookCover)return;
-      if(e.key==='ArrowRight'||e.key==='ArrowLeft'){e.preventDefault();activateDesk(e.key==='ArrowRight'?'book':'wallet',true);}
-    });
+    deck.dataset.active='wallet';book.hidden=true;
+    deck.setAttribute('aria-label','账本与随手工具');
     walletExpanded=true;$('#wallet-stage').classList.add('wallet-open');$('#wallet-toggle').setAttribute('aria-expanded','true');$('#wallet-toggle').textContent='收起钱包';$('#wallet-caption').textContent='看看钱都花哪儿了？';
     $('#wallet-toggle').addEventListener('click',function(){
       walletExpanded=!walletExpanded;if(!walletExpanded){if(phoneOpen)walletSelected=walletBeforePhone||activeBank||'';phoneOpen=false;}
@@ -5228,9 +5340,8 @@ SOFTWARE.
 
   /* ---------- 启动 ---------- */
   function init() {
-    if(!recoverBankDeletion())return;
-    load();
-    previewStorage.setItem(payKey(), JSON.stringify(PAY_METHODS.concat(PREVIEW_BANKS)));
+    if(!recoverBankDeletion())return false;
+    if (!load()) return false;
     loadPayOptions();     // 支付方式下拉 = 固定几项 + 这台设备上出现过的新卡
 
     var now = new Date();
@@ -5251,6 +5362,7 @@ SOFTWARE.
     // 看看这台设备上有没有存着的登录态：有就自动进账号，没有就当离线单机用。
     // 这一步放在最后 —— 它一失败也绝不能挡住上面已经渲染好的账本。
     // 独立交互预览：不自动恢复云端会话。
+    return true;
   }
 
 
@@ -5369,12 +5481,58 @@ SOFTWARE.
     renderBankManager('已删除 '+state.name+' 及 '+state.relatedCount+' 笔关联明细，统计已更新。');$('#bank-manager-close').focus();
   }
 
+
+  // v16：原生视觉过渡共享账本、钢笔和手机；旧浏览器以淡出/淡入与钢笔位移衔接。
+  var deskMotion=null,deskMotionTimer=0,deskMotionAnimations=[],deskMotionId=0,deskUpdating=false;
+  function deskTransition(change,after,afterDone){
+    var id=++deskMotionId,deck=$('#desk-deck'),completed=false;
+    if(deskMotion){deskMotion.skipTransition();deskMotion=null;}
+    clearTimeout(deskMotionTimer);deskMotionAnimations.forEach(function(a){a.cancel();});deskMotionAnimations=[];
+    function done(){if(id===deskMotionId&&!completed){completed=true;delete deck.dataset.motion;deck.classList.remove('desk-layout-update');if(afterDone)afterDone();}}
+    function commit(){
+      if(id!==deskMotionId)return;
+      deck.classList.add('desk-layout-update');deskUpdating=true;
+      try{change();void deck.offsetWidth;}finally{deskUpdating=false;}
+      if(after)after();
+    }
+    if(matchMedia('(prefers-reduced-motion: reduce)').matches){deck.dataset.motionEngine='reduced';commit();done();return;}
+    deck.dataset.motion=String(id);
+    // WebKit的嵌套共享快照在实测中间帧会漏绘钱包，使用已验证的淡入淡出与真实钢笔位移。
+    var webkitSnapshot=/AppleWebKit/.test(navigator.userAgent)&&!/(Chrome|Chromium|Edg)\//.test(navigator.userAgent);
+    if(typeof document.startViewTransition==='function'&&!webkitSnapshot){
+      deck.dataset.motionEngine='shared';
+      var transition=document.startViewTransition(commit);deskMotion=transition;
+      transition.ready.then(function(){if(id===deskMotionId)deck.classList.remove('desk-layout-update');},function(){if(id===deskMotionId)deck.classList.remove('desk-layout-update');});
+      transition.updateCallbackDone.catch(function(){done();});
+      transition.finished.then(function(){if(deskMotion===transition)deskMotion=null;done();},done);
+      return;
+    }
+    deck.dataset.motionEngine='fade';
+    var pen=$('#paper-add'),before=pen.getBoundingClientRect();
+    var outgoing=[$('#ledger-book'),$('#wallet-float'),$('#desk-book-rest')].filter(function(el){return el&&!el.hidden;});
+    function animate(el,frames,duration){var a=el.animate(frames,{duration:duration,easing:'cubic-bezier(.22,.7,.2,1)',fill:'both'});deskMotionAnimations.push(a);return a;}
+    outgoing.forEach(function(el){animate(el,[{opacity:1},{opacity:.4}],160);});
+    deskMotionTimer=setTimeout(function(){
+      if(id!==deskMotionId)return;
+      deskMotionAnimations.forEach(function(a){a.cancel();});deskMotionAnimations=[];commit();
+      var end=pen.getBoundingClientRect(),penBase=getComputedStyle(pen).transform,base=penBase==='none'?'':penBase;
+      deck.classList.remove('desk-layout-update');
+      [$('#ledger-book'),$('#wallet-float'),$('#desk-book-rest')].filter(function(el){return el&&!el.hidden;}).forEach(function(el){
+        var t=getComputedStyle(el).transform,tBase=t==='none'?'':t;
+        animate(el,[{opacity:.4,transform:tBase+' translateY(10px) scale(.985)'},{opacity:1,transform:tBase||'none'}],420);
+      });
+      var dx=before.x+before.width/2-end.x-end.width/2,dy=before.y+before.height/2-end.y-end.height/2;
+      animate(pen,[{transform:'translate('+dx+'px,'+dy+'px) scale('+(before.width/end.width)+','+(before.height/end.height)+') '+base},{transform:base||'none'}],580);
+      Promise.all(deskMotionAnimations.map(function(a){return a.finished.catch(function(){});})).then(function(){if(id===deskMotionId){deskMotionAnimations.forEach(function(a){a.cancel();});deskMotionAnimations=[];}done();});
+    },160);
+  }
+
   function setupPaperBook(){
     var book=$('#ledger-book');
     var panels=Array.from(book.querySelectorAll(':scope > .panel'));
     book.querySelector('.book-title').remove();
     var toolbar=paperText('div','paper-toolbar');
-    toolbar.innerHTML='<div class="paper-heading">我的账本<small>LIFE IN PAGES</small></div><div class="paper-actions"><button type="button" id="paper-overview">年度总览</button><button type="button" class="book-back">返回钱包</button></div>';
+    toolbar.innerHTML='<div class="paper-heading">我的账本<small>LIFE IN PAGES</small></div><div class="paper-actions"><button type="button" id="paper-today" class="paper-today">回到本月</button><button type="button" id="paper-overview">年度总览</button><button type="button" class="book-back">钱包</button></div>';
     book.prepend(toolbar);
     var pen=paperText('button','paper-pen');pen.id='paper-add';pen.type='button';pen.title='记一笔';pen.setAttribute('aria-label','拿起笔，记一笔');
     pen.innerHTML='<svg viewBox="0 0 34 220" aria-hidden="true"><defs><linearGradient id="pen-body" x1="0" x2="1"><stop offset="0" stop-color="#81708f"/><stop offset=".35" stop-color="#c5b4d2"/><stop offset=".65" stop-color="#ac96bc"/><stop offset="1" stop-color="#7c688b"/></linearGradient><linearGradient id="pen-metal" x1="0" x2="1"><stop stop-color="#a38a60"/><stop offset=".45" stop-color="#f0dfb7"/><stop offset="1" stop-color="#b9a071"/></linearGradient></defs><rect x="8" y="8" width="19" height="145" rx="9.5" fill="url(#pen-body)" stroke="#806c91" stroke-width=".7"/><path d="M8 28h19v4H8z M8 64h19v4H8z" fill="url(#pen-metal)"/><path d="M22 18v45q0 5-4 5" fill="none" stroke="url(#pen-metal)" stroke-width="3" stroke-linecap="round"/><path d="M8 148h19l-3 34H11z" fill="#857092" stroke="#74607f" stroke-width=".7"/><path d="M11 176h13l-2 9-4.5 25-4.5-25z" fill="url(#pen-metal)" stroke="#a58b60" stroke-width=".6"/><path d="M17.5 187v20" fill="none" stroke="#786555" stroke-width=".7"/><circle cx="17.5" cy="187" r="1.4" fill="#83705d"/><path d="M15.8 207l1.7 5 1.7-5" fill="#6f5d55"/><path d="M12 15v130" stroke="#fff" stroke-opacity=".25" stroke-width="1.3"/></svg>';
@@ -5403,13 +5561,14 @@ SOFTWARE.
     annual.addEventListener('change',function(e){if(e.target.id==='paper-annual-year'){paperJumpMonth(e.target.value+currentMonth.slice(4));renderPaperAnnual();}});
 
     panels[2].classList.add('paper-original-list');panels[2].setAttribute('aria-hidden','true');
-    function closeDrawer(){drawer.hidden=true;$('#paper-add').setAttribute('aria-expanded','false');$('#paper-overview').setAttribute('aria-expanded','false');}
+    function closeDrawer(){if(!book.hidden&&!drawer.hidden&&!deskUpdating){deskTransition(function(){closeDrawer();});return;}drawer.hidden=true;$('#paper-add').setAttribute('aria-expanded','false');$('#paper-overview').setAttribute('aria-expanded','false');}
     ['paper-add','paper-overview'].forEach(function(id){$('#'+id).setAttribute('aria-controls','paper-drawer');$('#'+id).setAttribute('aria-expanded','false');});
     $('#paper-add').addEventListener('click',function(){if(!drawer.hidden&&drawer.dataset.mode==='entry'){closeDrawer();return;}openPaperDrawer(true);});
     $('#paper-overview').addEventListener('click',function(){openPaperDrawer(false);});
-    $('#paper-drawer-close').addEventListener('click',function(){closeDrawer();$('#paper-add').focus();});
+    $('#paper-drawer-close').addEventListener('click',function(){var opener=drawer.dataset.mode==='annual'?'#paper-overview':'#paper-add';closeDrawer();$(opener).focus();});
+    $('#paper-today').addEventListener('click',function(){paperJumpMonth(monthOf(todayStr()));});
     // 新按钮接回原来的封面事件；旧标题里的监听随节点移除，避免改变钱包逻辑。
-    toolbar.querySelector('.book-back').addEventListener('click',function(){closeDrawer();$('#desk-deck').dataset.active='wallet';book.hidden=true;$('#book-cover').setAttribute('aria-expanded','false');renderWallet();});
+    toolbar.querySelector('.book-back').remove();
     $('#book-cover').addEventListener('click',function(){requestAnimationFrame(function(){renderPaperBook();});});
 
     new MutationObserver(function(){
@@ -5424,37 +5583,52 @@ SOFTWARE.
     $('#paper-prev-year').addEventListener('click',function(){paperJumpMonth(String(Number(currentMonth.slice(0,4))-1)+currentMonth.slice(4));});
     $('#paper-next-year').addEventListener('click',function(){paperJumpMonth(String(Number(currentMonth.slice(0,4))+1)+currentMonth.slice(4));});
     book.addEventListener('keydown',function(e){
-      if(e.key==='Escape'&&!drawer.hidden){closeDrawer();$('#paper-add').focus();return;}
+      if(e.key==='Escape'&&!drawer.hidden){var opener=drawer.dataset.mode==='annual'?'#paper-overview':'#paper-add';closeDrawer();$(opener).focus();return;}
       if(e.target.closest('input,select,textarea,button')||!drawer.hidden)return;
       if(e.key==='ArrowLeft'||e.key==='ArrowRight'){e.preventDefault();paperTurn(e.key==='ArrowRight'?1:-1);}
     });
-    // 统一用 Pointer Events 路由点击和横向拖动，再把轨迹交给引擎折纸。
-    // 引擎默认整页点击会翻动，和明细编辑冲突；此处只有横向拖动才开始折纸。
+
+    // v14：短滑只表达翻页方向，松手后由引擎完成折纸，无须把手指拖过书脊。
+    // 明细轻点仍编辑；垂直意图交还浏览器；取消手势不会触发翻页。
     var gesture=null;
-    stage.addEventListener('pointerdown',function(e){if(!paperFlip||e.button!==0||paperFlip.getState()==='flipping')return;var box=stage.getBoundingClientRect();gesture={x:e.clientX,y:e.clientY,left:box.left,top:box.top,dragging:false,id:e.pointerId};});
+    stage.title='轻点纸页两侧空白，或左右轻滑翻页';
+    stage.addEventListener('pointerdown',function(e){
+      if(!paperFlip||e.button!==0||e.isPrimary===false||paperFlip.getState()!=='read'||!$('#paper-drawer').hidden)return;
+      gesture={id:e.pointerId,x:e.clientX,y:e.clientY,max:0,horizontal:false};
+    });
     stage.addEventListener('pointermove',function(e){
       if(!gesture||gesture.id!==e.pointerId)return;
       var dx=e.clientX-gesture.x,dy=e.clientY-gesture.y;
-      if(Math.hypot(dx,dy)>9)paperSuppressUntil=Date.now()+700;
-      if(!gesture.dragging&&Math.abs(dx)>12&&Math.abs(dx)>Math.abs(dy)*1.2){
-        gesture.dragging=true;stage.setPointerCapture(e.pointerId);
-        paperFlip.startUserTouch({x:gesture.x-gesture.left,y:gesture.y-gesture.top});
-      }
-      if(gesture.dragging){
-        e.preventDefault();
-        // 单页视图藏起了左半本书，手指经过半页就相当于纸张经过书脊。
-        var ratio=paperFlip.getOrientation()==='portrait'?2:1;
-        gesture.point={x:gesture.x-gesture.left+dx*ratio,y:e.clientY-gesture.top};
-        paperFlip.userMove(gesture.point,false);
-      }
+      gesture.max=Math.max(gesture.max,Math.hypot(dx,dy));
+      if(!gesture.horizontal&&Math.abs(dy)>10&&Math.abs(dy)>Math.abs(dx)*1.2){gesture=null;paperSuppressUntil=Date.now()+350;return;}
+      if(!gesture.horizontal&&Math.abs(dx)>10&&Math.abs(dx)>Math.abs(dy)*1.3){gesture.horizontal=true;stage.setPointerCapture(e.pointerId);}
+      if(gesture.horizontal){e.preventDefault();paperSuppressUntil=Date.now()+350;}
     });
-    stage.addEventListener('pointerup',function(e){if(gesture&&gesture.dragging){paperFlip.userStop(gesture.point);paperSuppressUntil=Date.now()+700;}gesture=null;});
-    stage.addEventListener('pointercancel',function(){if(gesture&&gesture.dragging){var origin={x:gesture.x-gesture.left,y:gesture.y-gesture.top};paperFlip.userMove(origin,false);paperFlip.userStop(origin);}gesture=null;});
+    function finishGesture(e,cancel){
+      if(!gesture||gesture.id!==e.pointerId)return;
+      var g=gesture;gesture=null;
+      if(stage.hasPointerCapture(e.pointerId))stage.releasePointerCapture(e.pointerId);
+      var dx=e.clientX-g.x,dy=e.clientY-g.y;
+      if(g.max>8||Math.hypot(dx,dy)>8)paperSuppressUntil=Date.now()+350;
+      if(cancel)return;
+      if(g.horizontal&&Math.abs(dx)>=24&&Math.abs(dx)>Math.abs(dy)*1.3){paperTurn(dx<0?1:-1);return;}
+      // 手机会把靠边轻点吸附到附近的金额按钮。最外侧14px纸边按真实触点先翻页，拦住随后校正过的click。
+      if(g.max<=8&&Math.hypot(dx,dy)<=8){
+        var box=stage.getBoundingClientRect(),x=g.x-box.left;
+        if(x>=0&&x<=14||x>=box.width-14&&x<=box.width){paperSuppressUntil=Date.now()+350;paperTurn(x<box.width/2?-1:1);}
+      }
+    }
+    stage.addEventListener('pointerup',function(e){finishGesture(e,false);});
+    stage.addEventListener('pointercancel',function(e){finishGesture(e,true);});
+    // 触摸最初会隐式捕获到明细按钮；转交舞台时旧按钮的失捕获事件会冒泡，不能当成手势取消。
+    stage.addEventListener('lostpointercapture',function(e){if(e.target===stage&&gesture&&gesture.id===e.pointerId){gesture=null;paperSuppressUntil=Date.now()+350;}});
     stage.addEventListener('click',function(e){
-      if(Date.now()<paperSuppressUntil)return;
+      if(Date.now()<paperSuppressUntil||!paperFlip||paperFlip.getState()!=='read'||!$('#paper-drawer').hidden)return;
       var add=e.target.closest('[data-paper-add]');if(add){openPaperDrawer(true);return;}
-      var row=e.target.closest('.paper-record');
-      if(row&&(!paperFlip||paperFlip.getState()==='read'))openEditor(row.dataset.id);
+      var row=e.target.closest('.paper-record');if(row){openEditor(row.dataset.id);return;}
+      var box=stage.getBoundingClientRect(),x=e.clientX-box.left;
+      if(x>=0&&x<=44)paperTurn(-1);
+      else if(x>=box.width-44&&x<=box.width)paperTurn(1);
     });
     // 成功记账后收起抽屉并定位到刚记的那笔；校验失败时表单继续保留。
     $('#entry-form').addEventListener('submit',function(){
@@ -5466,6 +5640,7 @@ SOFTWARE.
   }
 
   function openPaperDrawer(entry){
+    if(!deskUpdating){deskTransition(function(){openPaperDrawer(entry);});return;}
     var drawer=$('#paper-drawer'),form=$('#entry-form').closest('.panel');
     drawer.dataset.mode=entry?'entry':'annual';drawer.hidden=false;form.hidden=!entry;$('#paper-annual').hidden=entry;
     $('#paper-add').setAttribute('aria-expanded',String(entry));$('#paper-overview').setAttribute('aria-expanded',String(!entry));
@@ -5550,7 +5725,8 @@ SOFTWARE.
     if($('#paper-drawer')&&!$('#paper-drawer').hidden&&$('#paper-drawer').dataset.mode==='annual')renderPaperAnnual();
     var spread=paperFlip&&paperFlip.getOrientation()==='landscape';
     var end=spread?Math.min(index+2,paperPages.length):index+1;
-    $('#paper-location').replaceChildren(paperText('span','',Number(currentMonth.slice(5))+'月 · 第 '+(index+1)+(spread?'–'+end:'')+' / '+paperPages.length+' 页'));
+    $('#paper-today').disabled=currentMonth===monthOf(todayStr());
+    $('#paper-location').replaceChildren(paperText('span','','第 '+(index+1)+(spread?'–'+end:'')+' / '+paperPages.length+' 页'));
     $('#paper-prev').disabled=index===0;$('#paper-next').disabled=end>=paperPages.length;
     $('#paper-stage').dataset.page=String(index);$('#paper-stage').dataset.month=currentMonth;
   }
@@ -5596,8 +5772,14 @@ SOFTWARE.
       });inner.appendChild(list);
     }else{
       var blank=paperText('div','paper-blank');blank.appendChild(paperText('span','paper-flower',recap?'❧':'❦'));
-      blank.appendChild(paperText('strong','',recap?'这个月，一笔一笔收好。':'这一页，还等着你的生活。'));
-      blank.appendChild(paperText('span','',recap?'本月共记下 '+count+' 笔账目':'这个月还没有记录'));
+      blank.appendChild(paperText('strong','',recap?(count?'本月共 '+count+' 笔':'本月暂无记录'):'这个月还没有记录'));
+      if(recap&&count){
+        var monthRows=records.filter(function(r){return monthOf(r.date)===month;});
+        var breakdown=paperText('div','paper-recap-counts');
+        [['收入','income'],['支出','expense'],['不计收支','transfer']].forEach(function(pair){
+          var line=paperText('span','',pair[0]+' ');line.appendChild(paperText('b','',monthRows.filter(function(r){return r.type===pair[1];}).length+' 笔'));breakdown.appendChild(line);
+        });blank.appendChild(breakdown);
+      }else if(!recap)blank.appendChild(paperText('span','','从第一笔开始'));
       if(!recap){var add=paperText('button','','＋ 记下第一笔');add.type='button';add.dataset.paperAdd='true';blank.appendChild(add);}inner.appendChild(blank);
     }
     var foot=paperText('div','paper-foot');foot.appendChild(paperText('span','',String(paperPages.length+1).padStart(2,'0')));inner.appendChild(foot);
@@ -5632,11 +5814,11 @@ SOFTWARE.
       paperFlip.turnToPage(0);paperFlip.updateFromHtml(elements);paperFlip.turnToPage(start);
     }else{
       if(paperFlip){paperFlip.destroy();paperFlip=null;}
-      stage.replaceChildren();var host=paperText('div','paper-host');host.id='paper-host';host.tabIndex=0;host.setAttribute('role','group');host.setAttribute('aria-label','账目明细，可左右滑动或用方向键翻页');stage.appendChild(host);
+      stage.replaceChildren();var host=paperText('div','paper-host');host.id='paper-host';host.tabIndex=0;host.setAttribute('role','group');host.setAttribute('aria-label','账目明细，可左右轻滑、点击纸页两侧空白或用方向键翻页');stage.appendChild(host);
       if(window.St&&St.PageFlip){
-        paperFlip=new St.PageFlip(host,{width:desktop?Math.floor(w/2):w,height:h,size:'fixed',usePortrait:!desktop,autoSize:false,showCover:false,drawShadow:true,maxShadowOpacity:.24,flippingTime:matchMedia('(prefers-reduced-motion: reduce)').matches?1:650,mobileScrollSupport:false,useMouseEvents:false,swipeDistance:35,clickEventForward:false,disableFlipByClick:false,showPageCorners:false,startPage:start});
+        paperFlip=new St.PageFlip(host,{width:desktop?Math.floor(w/2):w,height:h,size:'fixed',usePortrait:!desktop,autoSize:false,showCover:false,drawShadow:true,maxShadowOpacity:.24,flippingTime:matchMedia('(prefers-reduced-motion: reduce)').matches?1:480,mobileScrollSupport:false,useMouseEvents:false,swipeDistance:35,clickEventForward:false,disableFlipByClick:false,showPageCorners:false,startPage:start});
         paperFlip.on('flip',function(e){syncPaperLocation(e.data);});
-        paperFlip.on('changeState',function(e){stage.dataset.state=e.data;if(e.data!=='read')paperSuppressUntil=Date.now()+700;});
+        paperFlip.on('changeState',function(e){stage.dataset.state=e.data;});
         paperFlip.loadFromHTML(elements);
       }else{host.style.overflowY='auto';elements.forEach(function(el){el.style.height=h+'px';host.appendChild(el);});}
     }
@@ -5644,24 +5826,65 @@ SOFTWARE.
     if(paperFlip)syncPaperLocation(paperFlip.getCurrentPageIndex());
   }
 
-  function setupPreviewIntro() {
-    var intro=$('#preview-intro'),app=$('.app'),skip=$('#intro-skip');
-    if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-    var previousOverflow=document.body.style.overflow,timer,exitTimer,leaving=false;
-    intro.hidden=false;app.inert=true;document.body.style.overflow='hidden';
-    function finish(){intro.hidden=true;app.inert=false;document.body.style.overflow=previousOverflow;document.removeEventListener('keydown',onKey,true);if(document.activeElement===skip)$('#preview-sample').focus({preventScroll:true});}
-    function dismiss(){if(leaving)return;leaving=true;clearTimeout(timer);intro.classList.add('is-leaving');exitTimer=setTimeout(finish,270);}
-    function onKey(e){if(e.key==='Escape'){e.preventDefault();e.stopPropagation();dismiss();}}
-    skip.addEventListener('click',dismiss);document.addEventListener('keydown',onKey,true);
-    timer=setTimeout(dismiss,1850);
-    window.addEventListener('pagehide',function(){clearTimeout(timer);clearTimeout(exitTimer);finish();},{once:true});
+
+  function setupDeskTools(){
+    var deck=$('#desk-deck'),tools=paperText('nav','desk-tools');tools.setAttribute('aria-label','随手工具');deck.appendChild(tools);
+    var walletButton=paperText('button','desk-tool');walletButton.id='desk-wallet-open';walletButton.type='button';walletButton.setAttribute('aria-label','打开钱包浮窗');
+    walletButton.innerHTML='<svg viewBox="0 0 84 62" aria-hidden="true"><rect x="10" y="8" width="61" height="43" rx="9" fill="#b98972" stroke="#a7755e"/><path d="M19 8V5h45v7" fill="#d4b29b" stroke="#b98972"/><rect x="10" y="16" width="64" height="39" rx="8" fill="#c7957d" stroke="#ad7b64"/><rect x="59" y="27" width="18" height="14" rx="5" fill="#b08069" stroke="#a7755e"/><circle cx="67" cy="34" r="2.1" fill="#ebd2a1"/><path d="M17 22h33M17 48h39" stroke="#e7c5ad" stroke-dasharray="2 3" fill="none"/></svg><span>钱包</span>';
+    var phoneButton=paperText('button','desk-tool phone-tool');phoneButton.id='desk-phone-open';phoneButton.type='button';phoneButton.setAttribute('aria-label','打开手机线上渠道');
+    phoneButton.innerHTML='<svg viewBox="0 0 38 66" aria-hidden="true"><rect x="3" y="2" width="32" height="61" rx="7" fill="#49414e" stroke="#3d3542"/><rect x="6" y="6" width="26" height="52" rx="4" fill="#ece7ed"/><rect x="13" y="5" width="12" height="3" rx="1.5" fill="#49414e"/><rect x="10" y="17" width="7" height="7" rx="2" fill="#93b79a"/><rect x="21" y="17" width="7" height="7" rx="2" fill="#8eb5d0"/><rect x="10" y="28" width="7" height="7" rx="2" fill="#d1b39e"/><path d="M15 54h8" stroke="#a79aaa" stroke-width="2" stroke-linecap="round"/></svg><span>线上渠道</span>';
+    tools.append(walletButton,phoneButton,$('#paper-add'));
+
+    var book=$('#ledger-book'),cover=$('#book-cover'),pen=$('#paper-add');
+    var rest=paperText('div','desk-book-rest');rest.id='desk-book-rest';rest.hidden=true;deck.appendChild(rest);
+    var dialog=document.createElement('section');dialog.id='wallet-float';dialog.hidden=true;dialog.setAttribute('aria-label','钱包与线上渠道');
+    dialog.innerHTML='<div class="wallet-float-head"><button type="button" id="wallet-float-close">打开账本</button></div>';
+    deck.appendChild(dialog);dialog.appendChild($('.desk-wallet'));dialog.append($('#wallet-channels'),$('#wallet-detail'));
+    [walletButton,phoneButton].forEach(function(button){button.setAttribute('aria-controls','wallet-float');button.setAttribute('aria-expanded','false');});
+
+    function placeRest(){
+      if(deck.dataset.active!=='wallet')return;
+      if(matchMedia('(max-width:600px)').matches)dialog.insertBefore(rest,dialog.querySelector('.desk-wallet'));
+      else deck.appendChild(rest);
+    }
+    window.addEventListener('resize',placeRest);
+    function openBook(focus,entry){
+      deskTransition(function(){
+        dialog.hidden=true;rest.hidden=true;deck.appendChild(cover);tools.appendChild(pen);
+        deck.dataset.active='book';book.hidden=false;cover.setAttribute('aria-expanded','true');
+        walletButton.setAttribute('aria-expanded','false');phoneButton.setAttribute('aria-expanded','false');
+        renderPaperBook();
+        if(entry)openPaperDrawer(true);
+      },function(){if(focus&&$('#paper-host'))$('#paper-host').focus({preventScroll:true});},function(){
+        if(!entry||$('#paper-drawer').hidden)return;
+        var drawer=$('#paper-drawer'),box=drawer.getBoundingClientRect();
+        if(box.top<12||box.top>innerHeight-100)drawer.scrollIntoView({block:'start',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
+      });
+    }
+    function openWallet(phone){
+      deskTransition(function(){
+        if(paperFlip&&paperFlip.getState()==='flipping')paperFlip.getRender().finishAnimation();
+        deck.dataset.active='wallet';book.hidden=true;cover.setAttribute('aria-expanded','false');
+        rest.append(cover,pen);rest.hidden=false;dialog.hidden=false;placeRest();
+        walletExpanded=true;$('#wallet-stage').classList.add('wallet-open');$('#wallet-toggle').setAttribute('aria-expanded','true');$('#wallet-toggle').textContent='收起钱包';
+        if(phone){walletBeforePhone=walletSelected;walletSelected='';phoneOpen=true;}else{phoneOpen=false;}
+        renderWallet();walletButton.setAttribute('aria-expanded',String(!phone));phoneButton.setAttribute('aria-expanded',String(phone));
+      },function(){$('#wallet-float-close').focus({preventScroll:true});});
+    }
+    walletButton.addEventListener('click',function(){openWallet(false);});phoneButton.addEventListener('click',function(){openWallet(true);});
+    cover.setAttribute('aria-label','打开账本，继续阅读');cover.addEventListener('click',function(){openBook(true);});
+    // capture阶段先还原账本，再交给原钢笔监听打开唯一录入表单。
+    pen.addEventListener('click',function(e){if(deck.dataset.active==='wallet'){e.stopImmediatePropagation();openBook(false,true);}},true);
+    $('#wallet-float-close').addEventListener('click',function(){openBook(true);});
+    document.addEventListener('keydown',function(e){if(e.key==='Escape'&&deck.dataset.active==='wallet'&&!document.querySelector('.modal:not([hidden])')){e.preventDefault();openBook(true);}});
+    deck.dataset.active='book';book.hidden=false;cover.setAttribute('aria-expanded','true');renderPaperBook();
+
   }
 
   setupWalletDesk();
-  init();
+  if (!init()) return;
   setupPaperBook();
   setupBankManager();
-  setupPreviewIntro();
   $('#preview-reset').addEventListener('click', function () {
     if (confirm('重新体验会清空本页的测试账目和银行卡。继续吗？')) location.reload();
   });
@@ -5679,6 +5902,7 @@ SOFTWARE.
     currentMonth=month;$('#month-picker').value=month;addPayOption(bank);save();savePayOptions();refreshPaySelects();render();
     $('#preview-sample').textContent='示例已填入';$('#preview-sample').disabled=true;
   });
+  setupDeskTools();
 
 
 })();
