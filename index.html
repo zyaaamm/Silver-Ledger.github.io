@@ -1241,7 +1241,12 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 .preview-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;margin:0 0 20px;border:1px solid #dfd8c8;border-radius:12px;background:#f3f5ee;color:#617769;font-size:12px}
 .preview-banner strong{display:block;font-size:13px;font-weight:600}.preview-banner span{display:block;margin-top:2px}.preview-actions{display:flex;gap:7px;flex-shrink:0}.preview-actions button{font:inherit;color:#617769;background:#fffdf8;border:1px solid #d3dccf;border-radius:8px;min-height:38px;padding:7px 10px;cursor:pointer}
 @media(max-width:600px){.preview-banner{align-items:flex-start;flex-direction:column;margin-bottom:12px;padding:11px 13px}.preview-actions{align-self:flex-end}}
-.ios-simple-host{position:relative;width:100%;height:100%;overflow:hidden}.ios-simple-host .paper-page{position:absolute;inset:0;width:100%;height:100%}.ios-simple-host .paper-page[hidden]{display:none!important}</style>
+.ios-simple-host{position:relative;width:100%;height:100%;overflow:hidden}.ios-simple-host .paper-page{position:absolute;inset:0;width:100%;height:100%}.ios-simple-host .paper-page[hidden]{display:none!important}
+.ios-simple-host{perspective:1200px}
+.ios-simple-host .ios-flip-front{z-index:2;transform-origin:left center;backface-visibility:hidden;pointer-events:none;animation:ios-page-forward 480ms cubic-bezier(.25,.65,.25,1) both}
+.ios-simple-host .ios-flip-back{z-index:2;transform-origin:left center;backface-visibility:hidden;pointer-events:none;animation:ios-page-back 480ms cubic-bezier(.25,.65,.25,1) both}
+@keyframes ios-page-forward{from{transform:rotateY(0deg);filter:brightness(1)}to{transform:rotateY(-95deg);filter:brightness(.82)}}
+@keyframes ios-page-back{from{transform:rotateY(-95deg);filter:brightness(.82)}to{transform:rotateY(0deg);filter:brightness(1)}}</style>
 </head>
 <body>
 <div class="app">
@@ -5787,9 +5792,18 @@ SOFTWARE.
   }
   // iPhone 使用普通页面布局，绕开翻页组件在部分 iOS 上可能出现的绘制问题。
   function makeIOSPaperFlip(host,start){
-    var pages=[],index=start||0,listeners={};
-    function show(i){index=Math.max(0,Math.min(i,pages.length-1));pages.forEach(function(page,n){page.hidden=n!==index;});if(listeners.flip)listeners.flip({data:index});}
-    return {on:function(name,fn){listeners[name]=fn;},loadFromHTML:function(items){pages=items;host.classList.add('ios-simple-host');host.replaceChildren.apply(host,items);show(index);},updateFromHtml:function(items){pages=items;host.replaceChildren.apply(host,items);show(index);},turnToPage:show,flipNext:function(){show(index+1);},flipPrev:function(){show(index-1);},getCurrentPageIndex:function(){return index;},getOrientation:function(){return 'portrait';},getState:function(){return 'read';},getRender:function(){return {finishAnimation:function(){}};},destroy:function(){host.remove();}};
+    var pages=[],index=start||0,listeners={},state='read',timer=0,target=-1;
+    function show(i){index=Math.max(0,Math.min(i,pages.length-1));pages.forEach(function(page,n){page.hidden=n!==index;page.classList.remove('ios-flip-front','ios-flip-back');});if(listeners.flip)listeners.flip({data:index});}
+    function finish(){if(state!=='flipping')return;clearTimeout(timer);state='read';var dest=target;target=-1;show(dest);if(listeners.changeState)listeners.changeState({data:state});}
+    function turn(i){finish();show(i);}
+    function flip(direction){
+      if(state!=='read')return;var next=index+direction;if(next<0||next>=pages.length)return;
+      target=next;state='flipping';pages[next].hidden=false;
+      var moving=direction>0?pages[index]:pages[next];moving.classList.add(direction>0?'ios-flip-front':'ios-flip-back');
+      if(listeners.changeState)listeners.changeState({data:state});
+      timer=setTimeout(finish,480);
+    }
+    return {on:function(name,fn){listeners[name]=fn;},loadFromHTML:function(items){pages=items;host.classList.add('ios-simple-host');host.replaceChildren.apply(host,items);show(index);},updateFromHtml:function(items){finish();pages=items;host.replaceChildren.apply(host,items);show(index);},turnToPage:turn,flipNext:function(){flip(1);},flipPrev:function(){flip(-1);},getCurrentPageIndex:function(){return index;},getOrientation:function(){return 'portrait';},getState:function(){return state;},getRender:function(){return {finishAnimation:finish};},destroy:function(){finish();host.remove();}};
   }
   function isIOSPhone(){return /iPhone|iPod/.test(navigator.userAgent);}
   function renderPaperBook(){
