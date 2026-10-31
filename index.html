@@ -1241,7 +1241,7 @@ button:focus-visible,select:focus-visible,input:focus-visible,textarea:focus-vis
 .preview-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;margin:0 0 20px;border:1px solid #dfd8c8;border-radius:12px;background:#f3f5ee;color:#617769;font-size:12px}
 .preview-banner strong{display:block;font-size:13px;font-weight:600}.preview-banner span{display:block;margin-top:2px}.preview-actions{display:flex;gap:7px;flex-shrink:0}.preview-actions button{font:inherit;color:#617769;background:#fffdf8;border:1px solid #d3dccf;border-radius:8px;min-height:38px;padding:7px 10px;cursor:pointer}
 @media(max-width:600px){.preview-banner{align-items:flex-start;flex-direction:column;margin-bottom:12px;padding:11px 13px}.preview-actions{align-self:flex-end}}
-</style>
+.ios-simple-host{position:relative;width:100%;height:100%;overflow:hidden}.ios-simple-host .paper-page{position:absolute;inset:0;width:100%;height:100%}.ios-simple-host .paper-page[hidden]{display:none!important}</style>
 </head>
 <body>
 <div class="app">
@@ -5785,10 +5785,17 @@ SOFTWARE.
     var foot=paperText('div','paper-foot');foot.appendChild(paperText('span','',String(paperPages.length+1).padStart(2,'0')));inner.appendChild(foot);
     paperPages.push({month:month,ids:ids,number:number});return page;
   }
+  // iPhone 使用普通页面布局，绕开翻页组件在部分 iOS 上可能出现的绘制问题。
+  function makeIOSPaperFlip(host,start){
+    var pages=[],index=start||0,listeners={};
+    function show(i){index=Math.max(0,Math.min(i,pages.length-1));pages.forEach(function(page,n){page.hidden=n!==index;});if(listeners.flip)listeners.flip({data:index});}
+    return {on:function(name,fn){listeners[name]=fn;},loadFromHTML:function(items){pages=items;host.classList.add('ios-simple-host');host.replaceChildren.apply(host,items);show(index);},updateFromHtml:function(items){pages=items;host.replaceChildren.apply(host,items);show(index);},turnToPage:show,flipNext:function(){show(index+1);},flipPrev:function(){show(index-1);},getCurrentPageIndex:function(){return index;},getOrientation:function(){return 'portrait';},getState:function(){return 'read';},getRender:function(){return {finishAnimation:function(){}};},destroy:function(){host.remove();}};
+  }
+  function isIOSPhone(){return /iPhone|iPod/.test(navigator.userAgent);}
   function renderPaperBook(){
     var book=$('#ledger-book');if(!book||book.hidden)return;
     var stage=$('#paper-stage'),w=Math.floor(stage.clientWidth),h=Math.floor(stage.clientHeight);if(w<100||h<180)return;
-    var desktop=w>=660,capacity=Math.max(2,Math.floor((h-177)/67)),year=currentMonth.slice(0,4);
+    var desktop=!isIOSPhone()&&w>=660,capacity=Math.max(2,Math.floor((h-177)/67)),year=currentMonth.slice(0,4);
     var layout=[w,h,desktop,capacity].join('|');
     var yearRecords=records.filter(function(r){return String(r.date||'').slice(0,4)===year;});
     var signature=JSON.stringify([year,capacity,desktop,yearRecords]);
@@ -5815,7 +5822,11 @@ SOFTWARE.
     }else{
       if(paperFlip){paperFlip.destroy();paperFlip=null;}
       stage.replaceChildren();var host=paperText('div','paper-host');host.id='paper-host';host.tabIndex=0;host.setAttribute('role','group');host.setAttribute('aria-label','账目明细，可左右轻滑、点击纸页两侧空白或用方向键翻页');stage.appendChild(host);
-      if(window.St&&St.PageFlip){
+      if(isIOSPhone()){
+        paperFlip=makeIOSPaperFlip(host,start);
+        paperFlip.on('flip',function(e){syncPaperLocation(e.data);});
+        paperFlip.loadFromHTML(elements);
+      }else if(window.St&&St.PageFlip){
         paperFlip=new St.PageFlip(host,{width:desktop?Math.floor(w/2):w,height:h,size:'fixed',usePortrait:!desktop,autoSize:false,showCover:false,drawShadow:true,maxShadowOpacity:.24,flippingTime:matchMedia('(prefers-reduced-motion: reduce)').matches?1:480,mobileScrollSupport:false,useMouseEvents:false,swipeDistance:35,clickEventForward:false,disableFlipByClick:false,showPageCorners:false,startPage:start});
         paperFlip.on('flip',function(e){syncPaperLocation(e.data);});
         paperFlip.on('changeState',function(e){stage.dataset.state=e.data;});
